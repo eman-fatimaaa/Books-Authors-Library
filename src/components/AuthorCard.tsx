@@ -1,36 +1,27 @@
-import { User } from "lucide-react"
+import type { Author } from "../types/Authors";
 
-interface AuthorCardProps {
-	author: {
-		id: number
-		name: string
-		bio: string
-		birthYear: number
-		country: string
-	}
-	bookCount: number
+type Props = {
+  author: Author;     // no Required<...>
+  bookCount: number;
+};
+
+export default function AuthorCard({ author, bookCount }: Props) {
+  return (
+    <div className="p-4 bg-white rounded-lg shadow">
+      <div className="flex items-baseline justify-between">
+        <h3 className="font-semibold text-lg">{author.name}</h3>
+        <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded">
+          {bookCount} book{bookCount === 1 ? "" : "s"}
+        </span>
+      </div>
+
+      <div className="text-sm text-gray-600 mt-1">
+        {author.country || "—"} • {author.birthYear || "—"}
+      </div>
+
+      {author.bio && (
+        <p className="text-sm text-gray-700 mt-2 line-clamp-3">{author.bio}</p>
+      )}
+    </div>
+  );
 }
-
-const AuthorCard = ({ author, bookCount }: AuthorCardProps) => {
-	return (
-		<div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-			<div className="flex items-center mb-4">
-				<div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-					<User className="w-8 h-8 text-blue-600" />
-				</div>
-				<div>
-					<h3 className="text-xl font-bold text-gray-800">{author.name}</h3>
-					<p className="text-sm text-gray-500">
-						{author.country} • Born {author.birthYear}
-					</p>
-				</div>
-			</div>
-			<p className="text-sm text-gray-600 mb-3">{author.bio}</p>
-			<div className="text-sm text-blue-600 font-semibold">
-				{bookCount} {bookCount === 1 ? "book" : "books"} in collection
-			</div>
-		</div>
-	)
-}
-
-export default AuthorCard
